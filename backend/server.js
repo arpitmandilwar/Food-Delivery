@@ -17,7 +17,7 @@ const port = process.env.PORT || 4000;
 app.use(express.json())
 
 app.use(cors({
-  origin: "https://food-delivery-frontend-nv2r.onrender.com", // ✅ your frontend URL
+  origin: process.env.FRONTEND_URL,  // dynamically use the env variable
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
 }));
