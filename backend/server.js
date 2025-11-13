@@ -16,11 +16,24 @@ const port = process.env.PORT || 4000;
 // middleware
 app.use(express.json())
 
+const allowedOrigins = [
+  'https://food-delivery-frontend-9q6f.onrender.com',
+  'https://food-delivery-admin-ehw7.onrender.com',
+  'http://localhost:5173' // optional, for local dev
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL,  // dynamically use the env variable
+  origin: function(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true,
+  credentials: true
 }));
+
 
 
 // db connection
